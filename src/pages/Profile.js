@@ -1,32 +1,45 @@
-import React, {useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Accordion, Card } from 'react-bootstrap';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
 export default function Profile() {
-    // const location = useLocation();
-    // const { email, password } = location.state;
 
-    // // API call to verify email & password
-    // useEffect(() => {
-    //     let url = 'http://localhost:8888/api/customer/login/';
-    //     const validate = async (email, password) => {
-    //         console.log('111');
-    //         const response = await axios.get(`${url}:${email}/:${password}`);
-    //         console.log('222');
-    //         console.log(response.data);
-    //     };
-    //     validate(email, password);
-    // }, [email, password])
+    // let url = 'http://localhost:8888/api/customer/profile';
+    // let getCustomer = async () => {
+    //     return await axios.get( url, {
+    //         headers: {
+    //             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    //         }
+    //     })
+    // } 
+    // let response = getCustomer();
+    // console.log("@@@@");
+    // setTimeout(()=> {
+    //     let customer = response.data;
+    //     console.log(customer)
+    // },5000);
 
-    let customer = jwt_decode(localStorage.getItem('accessToken'));
-    console.log(customer);
+    const [custInfo, setCustInfo] = useState({});
+    // use effect to fetch customer details from the accessToken stored in localStorage
+    useEffect(()=> {
+        const fetchCust = async () => {
+            let response = await axios.get('http://localhost:8888/api/customer/profile', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            });
+            setCustInfo(response.data);
+        };
+        fetchCust();
+    }, [custInfo.firstName])
 
     return (
+        Object.keys(custInfo).length!==0 ? 
         <React.Fragment>
             <h1 className="m-3" >Customer Profile Page</h1>
-            <p className="m-3">Dear {customer.firstName} Welcome to your profile page </p>
+            <p className="m-3">Dear {custInfo.firstName}, Welcome to your profile page </p>
             <p className="m-3">You may find a list of your past and future bookings below: </p>
             <Card>
                 <Card.Body>
@@ -127,7 +140,8 @@ export default function Profile() {
                     </Card.Text>
                 </Card.Body>
             </Card>
-
         </React.Fragment>
+        : 
+        <h1>You do not have access to this page. Please try logging in again.</h1>
     )
 }
