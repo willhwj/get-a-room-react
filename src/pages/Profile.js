@@ -1,15 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import { Accordion, Card } from 'react-bootstrap';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 export default function Profile() {
-    const location = useLocation();
-    const { firstName } = location.state;
+    // const location = useLocation();
+    // const { email, password } = location.state;
+
+    // // API call to verify email & password
+    // useEffect(() => {
+    //     let url = 'http://localhost:8888/api/customer/login/';
+    //     const validate = async (email, password) => {
+    //         console.log('111');
+    //         const response = await axios.get(`${url}:${email}/:${password}`);
+    //         console.log('222');
+    //         console.log(response.data);
+    //     };
+    //     validate(email, password);
+    // }, [email, password])
+
+    let customer = jwt_decode(localStorage.getItem('accessToken'));
+    console.log(customer);
 
     return (
         <React.Fragment>
             <h1 className="m-3" >Customer Profile Page</h1>
-            <p className="m-3">Welcome to your profile page, {firstName} </p>
+            <p className="m-3">Dear {customer.firstName} Welcome to your profile page </p>
             <p className="m-3">You may find a list of your past and future bookings below: </p>
             <Card>
                 <Card.Body>

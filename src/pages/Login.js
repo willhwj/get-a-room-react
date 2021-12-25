@@ -1,21 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button} from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
+import jwt_decode from 'jwt-decode';
 
 export default function Login() {
     const navigate = useNavigate();
     const [formState, setFormState] = useState({
         'email': '',
-        'password': ''
+        'password': '',
+        'errorMsg': false
     });
-    // function submitForm(){
-    //     navigate('/profile', {
-    //         state: formState
-    //     }, {
-    //         replace: false
-    //     })
-    // }
+    async function submitForm() {
+        let url = 'http://localhost:8888/api/customer/login';
+        try {
+            const response = await axios.post(url, {
+                "email": formState.email,
+                "password": formState.password
+            });
+            if (response.status === 200) {
+                localStorage.setItem("accessToken", response.data);
+                navigate('/profile');
+            }
+        } 
+        catch (error){
+            setFormState({
+                ...formState,
+                'errorMsg': true
+            })
+        }
+    };
 
     // function to update state variables based on user input
     const updateFormField = (event) => {
@@ -24,16 +38,6 @@ export default function Login() {
             [event.target.name]: event.target.value
         })
     }
-
-    // API call to verify email & password
-    useEffect( ()=> {
-        let url='http://localhost:8888/api/customer/login/';
-        const validate= async(email, password) => {
-            const response = await axios.get(`${url}:${email}:${password}`);
-            console.log(response.data);
-        };
-        validate(formState.email, formState.password);
-    }, [formState.email])
 
     return (
         <Form className="m-3">
@@ -49,9 +53,15 @@ export default function Login() {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" name="password" value={formState.password} onChange={updateFormField} />
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={()=>useEffect} >
+            <Button variant="primary" onClick={submitForm} className="m-3">
                 Submit
             </Button>
+            {formState.errorMsg ?
+                <Alert variant='danger'>
+                    Your password and/or email do not match our record. Please try again.
+                </Alert>
+                : null
+            }
         </Form>
     )
 }
