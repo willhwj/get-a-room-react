@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Form, FloatingLabel, Button } from 'react-bootstrap';
+import React, { useState, useContext } from 'react';
+import ShoppingContext from '../contexts/ShoppingContext';
+import { Form, FloatingLabel, Button, InputGroup } from 'react-bootstrap';
+import axios from 'axios';
 
 export default function SearchForm() {
-    const navigate = useNavigate();
+    const context = useContext(ShoppingContext);
     const [formState, setFormState] = useState({
-        'date': '',
-        'startTime': '',
-        'endTime': '',
-        'roomTypeId': '',
-        'numRooms': ''
+        // 'date': '',
+        // 'startTime': '',
+        // 'endTime': '',
+        // 'roomTypeId': '',
+        // 'numRooms': ''
     });
-    function submitForm(){
-        navigate('/payment-done', {
-            state: formState
-        }, {
-            replace: false
-        })
+    async function submitForm() {
+        let url = 'http://localhost:8888/api/shopping';
+        console.log(formState);
+        let response = await axios.post(url, formState);
+        console.log(response.data);
+        // send the updated product list to the ShoppingContect
+        context.updateProductList(response.data);
     }
 
     // function to update state variables based on user input
@@ -27,20 +29,30 @@ export default function SearchForm() {
         })
     }
 
+    // const [validated, setValidated] = useState(false);
+    // const handleSubmit = (event) => {
+    //     const form = event.currentTarget;
+    //     if (form.checkValidity() === false) {
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //     }
+    //     setValidated(true);
+    // };
+
     return (
         <React.Fragment>
             <h1>Home Page</h1>
             <p>Please select your preferred room type and book</p>
             <Form className='m-3'>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group className="mb-3" controlId="validationCustom01">
                     <Form.Label>Select Date</Form.Label>
-                    <Form.Control type="date" placeholder="click" name="date" value={formState.date} onChange={updateFormField} />
+                    <Form.Control required type="date" placeholder="click" name="date" value={formState.date} onChange={updateFormField} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group className="mb-3">
                     <Form.Label>Room Type</Form.Label>
                     <FloatingLabel controlId="floatingSelect" label="Which Room Type Do You Prefer?">
                         <Form.Select aria-label="Floating label select example" name="roomTypeId" value={formState.roomTypeId} onChange={updateFormField} >
-                            <option>Click To Select</option>
+                            <option value='' >Click To Select</option>
                             <optgroup label="Up To 2 Pax">
                                 <option value="1">Small Room</option>
                             </optgroup>
@@ -48,17 +60,17 @@ export default function SearchForm() {
                                 <option value="2">Medium Room</option>
                             </optgroup>
                             <optgroup label="Up To 8 Pax">
-                                <option value="3">Big Room</option>
+                                <option value="3">Large Room</option>
                                 <option value="4">VIP Room</option>
                             </optgroup>
                         </Form.Select>
                     </FloatingLabel>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group className="mb-3">
                     <Form.Label>How Many Rooms?</Form.Label>
                     <Form.Control type="number" placeholder="2" name="numRooms" value={formState.numRooms} onChange={updateFormField} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group className="mb-3">
                     <Form.Label>Start Time</Form.Label>
                     <FloatingLabel controlId="floatingSelect" label="What Time Will You Check In?">
                         <Form.Select aria-label="Floating label select example" name="startTime" value={formState.startTime} onChange={updateFormField}  >
@@ -87,7 +99,7 @@ export default function SearchForm() {
                         </Form.Select>
                     </FloatingLabel>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group className="mb-3">
                     <Form.Label>End Time</Form.Label>
                     <FloatingLabel controlId="floatingSelect" label="What Time Will You Check Out?">
                         <Form.Select aria-label="Floating label select example" name="endTime" value={formState.endTime} onChange={updateFormField}  >

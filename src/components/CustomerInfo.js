@@ -6,7 +6,7 @@ export default function CustomerInfo() {
 
     return (
         <React.Fragment>
-            <p className="m-3">Dear {custInfo.firstName}, Welcome to your profile page </p>
+            <p className="m-3">Dear , Welcome to your profile page </p>
             <p className="m-3">You may find a list of your past and future bookings below: </p>
         </React.Fragment>
     )

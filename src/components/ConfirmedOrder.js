@@ -5,6 +5,6 @@ import { Form, FloatingLabel, Button } from 'react-bootstrap';
 export default function ConfirmedOrder() {
 
     return (
-        
+        console.log('ConfirmedOrder.js')
     )
 }
