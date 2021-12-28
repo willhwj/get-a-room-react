@@ -14,9 +14,7 @@ export default function SearchForm() {
     });
     async function submitForm() {
         let url = 'http://localhost:8888/api/shopping';
-        console.log(formState);
         let response = await axios.post(url, formState);
-        console.log(response.data);
         // send the updated product list to the ShoppingContect
         context.updateProductList(response.data);
     }
