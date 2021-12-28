@@ -59,28 +59,22 @@ export default function Home() {
             let index = cart.findIndex(item => item.id === itemId);
             let updatedItem = { ...cart[index] };
             let newQuantity = 0 ;
+            let clonedArray = [...cart];
             switch (true) {
-                case (updatedItem.quantity + change >= updatedItem.inventory):
-                    newQuantity = updatedItem.inventory;
-                    console.log(newQuantity);
-                    break;
-                case (updatedItem.quantity + change=== 0):
-                    console.log('remove this item');
-                    break;
-                case (updatedItem.quantity + change < 0):
+                case (updatedItem.quantity + change <= 0):
                     newQuantity = 0;
+                    clonedArray.splice(index, 1);
+                    setCart(clonedArray);
                     break;
                 default:
-                    newQuantity = updatedItem.quantity + change;
+                    newQuantity = (updatedItem.quantity + change >= updatedItem.inventory) ? updatedItem.inventory: updatedItem.quantity + change;
+                    let clonedItem = {
+                        ...updatedItem,
+                        quantity: newQuantity
+                    };
+                    clonedArray.splice(index, 1, clonedItem);
+                    setCart(clonedArray);
             }
-            let clonedItem = {
-                ...updatedItem,
-                quantity: newQuantity
-            };
-            let clonedArray = [...cart];
-            clonedArray.splice(index, 1, clonedItem);
-            setCart(clonedArray);
-
         }
 
     }
