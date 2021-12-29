@@ -1,11 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Table, Button, Alert } from 'react-bootstrap';
+import { Card, Table, Button, Alert, Modal, Form } from 'react-bootstrap';
 import ShoppingContext from '../contexts/ShoppingContext';
 import moment from 'moment';
 
 export default function Cart() {
     const context = useContext(ShoppingContext);
+
+    // to control display modal for login
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <React.Fragment>
             {context.getCartItems().length === 0 ? null :
@@ -39,6 +45,45 @@ export default function Cart() {
                         </tbody>
                     </Table>
                     <Button className='py-0 px-1 ms-1 btn-secondary' onClick={context.checkout} >Make Payment</Button>
+                    {context.getLoginPop() ?
+                        <Button variant="primary" onClick={handleShow}>
+                            Login Now
+                        </Button>
+                        : null
+                    }
+
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Modal heading</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form className="m-3">
+                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                    <Form.Label>Email address</Form.Label>
+                                    <Form.Control type="email" placeholder="Enter email" name="email" />
+                                    <Form.Text className="text-muted">
+                                        We'll never share your email with anyone else.
+                                    </Form.Text>
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="formBasicPassword">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control type="password" placeholder="Password" name="password" />
+                                </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <div>Do not have account? <a href='/profile' >Create one now!</a> </div>
+                            <div>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" onClick={handleClose}>
+                                    Login
+                                </Button>
+                            </div>
+                        </Modal.Footer>
+                    </Modal>
                 </Card>
             }
         </React.Fragment>

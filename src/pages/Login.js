@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Alert } from 'react-bootstrap';
+import ShoppingContext from '../contexts/ShoppingContext';
 import jwt_decode from 'jwt-decode';
 
 export default function Login() {
@@ -11,6 +12,7 @@ export default function Login() {
         'password': '',
         'errorMsg': false
     });
+    const context = useContext(ShoppingContext);
     async function submitForm() {
         let url = 'http://localhost:8888/api/customer/login';
         try {

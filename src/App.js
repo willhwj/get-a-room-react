@@ -11,8 +11,33 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 // import react bootstrap component
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
+  const [loginStatus, setLoginStatus] = useState(false);
+  const [customer, setCustomer] = useState({});
+
+  const baseUrl = 'http://localhost:8888/api/';
+  // use effecto to check if customer is logged in
+  useEffect(() => {
+    const checkCustomer = async () => {
+      try {
+        let response = await axios.get(baseUrl + 'customer/profile', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        });
+        setCustomer(response.data);
+        setLoginStatus(true);
+      } catch (e) {
+        console.log(e.message, 'customer is not logged in');
+      }
+    };
+    checkCustomer();
+  }, [loginStatus]
+  )
+
   return (
     <Router>
       <Navbar bg="light" expand="lg">
@@ -40,22 +65,16 @@ function App() {
                 </LinkContainer>
               </NavDropdown>
             </Nav>
+            <Navbar.Text>
+              {
+                loginStatus ? 
+                <a href="/profile">Hello, {customer.firstName} {customer.lastName} </a>
+                : <a href="/login" >Log Into Your Account To Make Payment</a>
+              }
+            </Navbar.Text>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {/* <nav>
-      <ul>
-        <li>
-          <Link to='/'>Home</Link>
-        </li>
-        <li>
-          <Link to='/profile'>Profile</Link>
-        </li>
-        <li>
-          <Link to='/contact'>Contact Us</Link>
-        </li>
-      </ul>
-    </nav> */}
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/contact' element={<Contact />} />
