@@ -14,7 +14,7 @@ export default function CustomerInfo() {
                     <ListGroup.Item>Full Name: {context.getCustInfo().firstName} {context.getCustInfo().lastName}</ListGroup.Item>
                     <ListGroup.Item>Email Address: {context.getCustInfo().email}</ListGroup.Item>
                     <ListGroup.Item>Phone Number: {context.getCustInfo().phone_number}</ListGroup.Item>
-                    <ListGroup.Item>Status: {context.getCustInfo().status}</ListGroup.Item>
+                    <ListGroup.Item>Account Status: {context.getCustInfo().status}</ListGroup.Item>
                 </ListGroup>
             </Card>
             <p className="m-3">You may find a list of your past and future bookings below: </p>

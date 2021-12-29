@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
-import BookingList from '../components/BookingList'
+import OrderList from '../components/OrderList'
 import ProfileContext from '../contexts/ProfileContext';
 import CustomerInfo from '../components/CustomerInfo';
 import {Button} from 'react-bootstrap';
@@ -12,7 +11,8 @@ export default function Profile() {
     const navigate = useNavigate();
     
     const [custInfo, setCustInfo] = useState({});
-    // use effect to fetch customer details from the accessToken stored in localStorage
+    const [orderList, setOrderList] = useState([]);
+    // use effect to fetch customer details from the accessToken stored in localStorage, and get list of orders
     useEffect(() => {
         const fetchCust = async () => {
             try{
@@ -22,6 +22,9 @@ export default function Profile() {
                     }
                 });
                 setCustInfo(response.data);
+                let customerId = response.data.id;
+                response = await axios.get(baseUrl + 'customer/orders/' + customerId);
+                setOrderList(response.data);
             } catch (e){
                 console.log(e.message);
                 navigate('/login');
@@ -38,6 +41,9 @@ export default function Profile() {
             localStorage.removeItem('accessToken');
             setCustInfo({});
             navigate('/login');
+        },
+        getOrderList: ()=> {
+            return orderList;
         }
     }
 
@@ -48,7 +54,7 @@ export default function Profile() {
                     <h1 className="m-3" >Customer Profile Page</h1>
                     <Button variant='secondary' className='py-0 px-1' onClick={context.logout} >Log Out</Button>
                     <CustomerInfo />
-                    <BookingList />
+                    <OrderList />
                 </React.Fragment>
                 :
                 navigate('/login')
