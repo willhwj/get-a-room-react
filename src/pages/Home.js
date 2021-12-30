@@ -18,13 +18,14 @@ export default function Home() {
     // state variable to track if order is confirmed
     const [order, setOrder] = useState({});
 
-    const baseUrl = 'http://localhost:8888/api/';
-    
+    // const baseUrl = 'http://localhost:8888/api/';
+    const baseUrl = 'https://get-a-room-hwj.herokuapp.com/api/';
+
     // use effect to check if the customer is logged in
     useEffect(() => {
         context.checkCustInfo();
     })
-    
+
     // context for all shopping related state changes
     const context = {
         updateProductList: (newList) => {
@@ -42,7 +43,7 @@ export default function Home() {
                     quantity: 1
                 };
                 setCart([...cart, cloned]);
-            } 
+            }
             // when the same product is added to cart, increment the quantity of that product by 1
             else {
                 let index = cart.findIndex(item => item.id === product.id);
@@ -108,7 +109,7 @@ export default function Home() {
                 console.log(e.message, 'customer is not logged in');
             }
         },
-        getLoginPop: ()=> {
+        getLoginPop: () => {
             return loginPopup;
         }
     }

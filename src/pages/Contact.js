@@ -85,31 +85,6 @@ export default function Contact() {
                     Submit
                 </Button>
             </Form>
-            {/* <div> */}
-                {/* <div>
-                    <label>First Name</label>
-                    <input type='text' name='firstName' value={formState.firstName} onChange={updateFormField} />
-                </div>
-                <div>
-                    <label>Last Name</label>
-                    <input type='text' name='lastName' value={formState.lastName} onChange={updateFormField} />
-                </div>
-                <div>
-                    <label>Email Address</label>
-                    <input type='text' name='email' value={formState.email} onChange={updateFormField} />
-                </div> */}
-                {/* <div>
-                    <label>Inquiry Type</label>
-                    <input type='checkbox' name='inquiryType' value='booking' checked={formState.inquiryType.includes('booking')} onClick={updateFormField} />Sales
-                    <input type='checkbox' name='inquiryType' value='feedback' checked={formState.inquiryType.includes('feedback')} onClick={updateFormField} />feedback
-                    <input type='checkbox' name='inquiryType' value='compliment' checked={formState.inquiryType.includes('compliment')} onClick={updateFormField} />Compliment
-                </div> */}
-                {/* <div>
-                    <label>Inquiry Content</label>
-                    <textarea type='text' name='inquiryContent' value={formState.inquiryContent} onChange={updateFormField} ></textarea>
-                </div> */}
-                {/* <input type='button' onClick={submitForm} />Submit
-            </div> */}
         </React.Fragment>
     )
 }
