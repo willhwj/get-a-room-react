@@ -7,17 +7,12 @@ export default function SearchForm() {
     const context = useContext(ShoppingContext);
     const [formState, setFormState] = useState({
     });
-    const baseUrl = 'http://localhost:8888/api/shopping';
-    async function submitForm() {
-        let response = await axios.post(baseUrl, formState);
-        // send the updated product list to the ShoppingContect
-        context.updateProductList(response.data);
-    }
-
-    // use effect to trigger display of product list
+    const baseUrl = 'https://get-a-room-hwj.herokuapp.com/api/';
+    // const baseUrl = 'http://localhost:8888/api/';
+ // use effect to trigger display of product list
     useEffect(() => {
         const fetchProductList = async () => {
-            let response = await axios.post(baseUrl, formState);
+            let response = await axios.post(baseUrl + 'shopping', formState);
             // send the updated product list to the ShoppingContect
             context.updateProductList(response.data);
         };
@@ -60,24 +55,21 @@ export default function SearchForm() {
                 <Button variant="primary" onClick={handleShow} className="me-2">
                     Filter
                 </Button>
-                <Offcanvas show={show} onHide={handleClose} placement="top" scroll>
+                <Offcanvas show={show} onHide={handleClose} placement="end" scroll>
                     <Offcanvas.Header closeButton className='pb-0 mb-0 fw-bold' >
                         Filter Criteria
                     </Offcanvas.Header>
                     <Offcanvas.Body className='pt-0 mt-0' >
                         <Form className='mx-2 my-0 px-1 pt-1 pb-0' noValidate validated={validated} onSubmit={handleSubmit} >
-                            <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
+                            <Form.Group className="mb-3" controlId="validationCustom01">
                                 <Form.Label column className='fs-6' >Select Date</Form.Label>
-                                <Col sm={10}>
                                     <Form.Control required size="sm" type="date" placeholder="click" name="date" value={formState.date} onChange={updateFormField} />
                                     <Form.Control.Feedback type="invalid">
                                         Please choose a date.
                                     </Form.Control.Feedback>
-                                </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-3">
                                 <Form.Label column className='fs-6'>Room Type</Form.Label>
-                                <Col sm={10}>
                                     <FloatingLabel controlId="floatingSelect" label="Which Room Type Do You Prefer?">
                                         <Form.Select size="sm" aria-label="Floating label select example" name="roomTypeId" value={formState.roomTypeId} onChange={updateFormField} >
                                             <option value='' >Click To Select</option>
@@ -93,17 +85,13 @@ export default function SearchForm() {
                                             </optgroup>
                                         </Form.Select>
                                     </FloatingLabel>
-                                </Col>
                             </Form.Group>
-                            <Form.Group as={Row} className="mb-3">
+                            <Form.Group className="mb-3">
                                 <Form.Label column className='fs-6'>How Many Rooms?</Form.Label>
-                                <Col sm={10}>
                                     <Form.Control size="sm" type="number" placeholder="2" name="numRooms" value={formState.numRooms} onChange={updateFormField} />
-                                </Col>
                             </Form.Group>
-                            <Form.Group as={Row} className="mb-3">
+                            <Form.Group className="mb-3">
                                 <Form.Label column className='fs-6'>Start Time</Form.Label>
-                                <Col sm={10}>
                                     <FloatingLabel controlId="floatingSelect" label="What Time Will You Check In?">
                                         <Form.Select size="sm" aria-label="Floating label select example" name="startTime" value={formState.startTime} onChange={updateFormField}  >
                                             <option>Click To Select</option>
@@ -130,11 +118,9 @@ export default function SearchForm() {
                                             </optgroup>
                                         </Form.Select>
                                     </FloatingLabel>
-                                </Col>
                             </Form.Group>
                             <Form.Group as={Row} className="mb-3">
                                 <Form.Label column className='fs-6'>End Time</Form.Label>
-                                <Col sm={10}>
                                     <FloatingLabel controlId="floatingSelect" label="What Time Will You Check Out?">
                                         <Form.Select size="sm" aria-label="Floating label select example" name="endTime" value={formState.endTime} onChange={updateFormField}  >
                                             <option>Click To Select</option>
@@ -161,7 +147,6 @@ export default function SearchForm() {
                                             </optgroup>
                                         </Form.Select>
                                     </FloatingLabel>
-                                </Col>
                             </Form.Group>
                             <Button variant="primary" type="submit" className="m-0 p-1">
                                 Search

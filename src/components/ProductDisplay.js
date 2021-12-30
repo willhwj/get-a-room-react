@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useContext } from 'react';
 import moment from 'moment';
 import { Table, Button } from 'react-bootstrap';
 import ShoppingContext from '../contexts/ShoppingContext';
@@ -9,7 +8,7 @@ export default function SearchForm() {
     const context = useContext(ShoppingContext);
     return (
         <React.Fragment>
-            <p className='m-2' > Product List </p>
+            <p className='m-2 fw-bold fs-3 text-center' > Product List </p>
             <Table striped bordered hover>
                 <thead>
                     <tr>

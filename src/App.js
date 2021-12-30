@@ -51,7 +51,7 @@ function App() {
             width="30"
             height="30"
             className="d-inline-block align-top"
-          />{' '}<span className='fw-bolder' >Book A Room</span></Navbar.Brand>
+          />{' '}<span className='fw-bolder' >Get-A-Room</span></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

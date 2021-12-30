@@ -14,9 +14,10 @@ export default function Login() {
     });
     const context = useContext(ShoppingContext);
     async function submitForm() {
-        let url = 'http://localhost:8888/api/customer/login';
+        // const baseUrl = 'http://localhost:8888/api/';
+        const baseUrl = 'https://get-a-room-hwj.herokuapp.com/api/';
         try {
-            const response = await axios.post(url, {
+            const response = await axios.post(baseUrl + 'customer/login', {
                 "email": loginForm.email,
                 "password": loginForm.password
             });

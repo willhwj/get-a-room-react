@@ -30,7 +30,6 @@ User Stories | Features
 -------------|-------------
 Staff can create account in the admin portal, log into existing account at the admin portal and create room slots. | Staff can click on registration to create an account and log into her account. Once logged in, staff user can create room slots by different criteria.
 Staff can search slots by room types, date, timings and amenities.  | Once a staff user is logged into her account, she is able to search for the relevant slots by the specified criteria.
-Staff can search bookings. | Once a staff user is logged into her account, she can search all bookings, or filter bookings by consumption date & timing, booking date & timing and by customer.
 Staff can create new rooms and new room types. | Once a staff user is logged into her account, she is able to create new rooms under the specified room type. She is also able to create new room types
 Staff can create new amenities and assign to room types. | Once a staff user is logged into her account, she is able to create new amenities and assign those amenities to respective room types.
 Consumers can check the availability and price instantly without creating any account in the booking engine. | Consumers can see available room types at different timings and dates, as well as their respective prices, immediately at the booking engine, without any login. 
@@ -72,13 +71,16 @@ database is constructed with DB-migrate in Express server
 * Bookshelf ORM
 Object relational modelling is done via Bookshelf
 
-
 # 3. Future Features To Implement
 * Implement a more smooth account registration and login flow at React booking engine. Right now the login feature is implemented in a fragmented way, using a collection of context API, local storage of JWT access token, useEffect hook. As a result, right now sometimes the logged-in state takes time to sync and may need a second click or page refresh to sync the state. 
 * Add CSS styling and layout optimization to the React booking engine.
 * Display server side error messages to frontend users in React.
 * Implement a user view, where a user can log in and see her comments, her collected snippets etc.
 * Shopping cart table in DB is currently not in use. One enhancement is to use this table to store shopping cart for logged-in consumer, so that she can pick up again her cart and continue checking out.
+* To display the current order details immediately upon successful payment at Stripe. Right now Stripe redirects to a generic page, which then ask consumer to go to My Profile page to see all orders, including the current order. To display order details in booking engine immediately after successful payment at Stripe, an order must be created first as tentative status with order ID stored in React before redirecting to Stripe for payment
+* To handle non-successful-payment scenarios at Stripe, such as failure, or session expiry after 24 hours
+* To enhance admin portal such that staff can search all orders
+* To enhance admin portal such that staff can create rooms and timeslots more efficiently
 
 # 4. Deployment
 * The React app (consumer booking engine) is deployed in Netlify: https://gracious-cori-a0b9cb.netlify.app/  

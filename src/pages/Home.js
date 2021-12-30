@@ -4,7 +4,6 @@ import ShoppingContext from '../contexts/ShoppingContext';
 import SearchForm from '../components/SearchForm';
 import ProductDisplay from '../components/ProductDisplay';
 import Cart from '../components/Cart';
-import ConfirmedOrder from '../components/ConfirmedOrder';
 
 export default function Home() {
     // state variables for all available room type slots
@@ -18,8 +17,8 @@ export default function Home() {
     // state variable to track if order is confirmed
     const [order, setOrder] = useState({});
 
-    const baseUrl = 'http://localhost:8888/api/';
-    // const baseUrl = 'https://get-a-room-hwj.herokuapp.com/api/';
+    // const baseUrl = 'http://localhost:8888/api/';
+    const baseUrl = 'https://get-a-room-hwj.herokuapp.com/api/';
 
     // use effect to check if the customer is logged in
     useEffect(() => {
@@ -116,15 +115,11 @@ export default function Home() {
 
     return (
         <ShoppingContext.Provider value={context}>
-            {Object.keys(order).length === 0 ?
-                <React.Fragment>
-                    <SearchForm />
-                    <ProductDisplay />
-                    <Cart />
-                </React.Fragment>
-                :
-                <ConfirmedOrder />
-            }
+            <React.Fragment>
+                <SearchForm />
+                <ProductDisplay />
+                <Cart />
+            </React.Fragment>
         </ShoppingContext.Provider>
     )
 }
