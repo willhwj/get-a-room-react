@@ -9,7 +9,7 @@ export default function SearchForm() {
     const context = useContext(ShoppingContext);
     return (
         <React.Fragment>
-            <p> Product List </p>
+            <p className='m-2' > Product List </p>
             <Table striped bordered hover>
                 <thead>
                     <tr>

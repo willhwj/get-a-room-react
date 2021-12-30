@@ -18,8 +18,8 @@ export default function Home() {
     // state variable to track if order is confirmed
     const [order, setOrder] = useState({});
 
-    // const baseUrl = 'http://localhost:8888/api/';
-    const baseUrl = 'https://get-a-room-hwj.herokuapp.com/api/';
+    const baseUrl = 'http://localhost:8888/api/';
+    // const baseUrl = 'https://get-a-room-hwj.herokuapp.com/api/';
 
     // use effect to check if the customer is logged in
     useEffect(() => {
