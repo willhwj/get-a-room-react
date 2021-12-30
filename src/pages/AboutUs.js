@@ -51,6 +51,7 @@ export default function AboutUs() {
                 />
                 <Carousel.Caption className='text-black bg-light bg-opacity-75 mb-1 pb-0 px-2' >
                     <h3>Our History</h3>
+                    <p  className="text-start">We have been operating in this premise since 2002!</p>
                     <p  className="text-start">
                         We used to operate as a family KTV outlet, very popular among residents in the North region. With the prolonged COVID-19 pandemic, we could no longer operate the KTV business due to prevailing safe-distancing requirements from the government.
                     </p>
