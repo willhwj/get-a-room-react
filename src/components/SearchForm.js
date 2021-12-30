@@ -34,6 +34,7 @@ export default function SearchForm() {
 
     return (
         <React.Fragment>
+            <div className='m-2' >
             <h1>Home Page</h1>
             <p>Please select your preferred room type and book</p>
             <Button variant="primary" onClick={handleShow} className="me-2">
@@ -145,6 +146,7 @@ export default function SearchForm() {
                     </Button>
                 </Offcanvas.Body>
             </Offcanvas>
+            </div>
         </React.Fragment>
     )
 }
